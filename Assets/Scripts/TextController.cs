@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class TextController : MonoBehaviour {
 
 	public Text text;
-	private enum State {cell, sheets_0, lock_0, mirror, sheets_1, lock_1, cell_mirror, corridor_0};
+
+	private enum State {cell, sheets_0, lock_0, mirror, sheets_1, lock_1, cell_mirror, corridor_0, 
+	stairs_0, floor, closed_door, stairs_1, corridor_1, in_closet, corridor_2, stairs_2, corridor_3, 
+	courtyard};
 
 	State currentState;
 	// Use this for initialization
@@ -41,6 +44,36 @@ public class TextController : MonoBehaviour {
 				break;
 			case State.corridor_0:
 				StateCorridor0();
+				break;
+			case State.stairs_0:
+				StateStairs0();
+				break;
+			case State.floor:
+				StateFloor();
+				break;
+			case State.closed_door:
+				StateClosedDoor();
+				break;
+			case State.stairs_1:
+				StateStairs1();
+				break;
+			case State.corridor_1:
+				StateCorridor1();
+				break;
+			case State.in_closet:
+				StateInCloset();
+				break;
+			case State.corridor_2:
+				StateCorridor2();
+				break;
+			case State.stairs_2:
+				StateStairs2();
+				break;
+			case State.corridor_3:
+				StateCorridor3();
+				break; 
+			case State.courtyard:
+				StateCourtyard();
 				break;
 			default:
 				StateCell();
@@ -161,6 +194,127 @@ public class TextController : MonoBehaviour {
 
 	void StateCorridor0()
 	{
+		text.text = "You're out of your cell, but not out of trouble." +
+					"You are in the corridor, there's a closet and some stairs leading to " +
+					"the courtyard. There's also various detritus on the floor.\n\n" +
+					"<b>C</b> to view the Closet, <b>F</b> to inspect the Floor, and <b>S</b> to climb the stairs";
+
+		if(Input.GetKeyDown(KeyCode.S))
+		{
+			currentState = State.stairs_0;
+		} 
+		else if (Input.GetKeyDown(KeyCode.F))
+		{
+			currentState = State.floor;
+		}
+		else if (Input.GetKeyDown(KeyCode.C))
+		{
+			currentState = State.closed_door;
+		}
+	}
+
+	void StateStairs0()
+	{
+		text.text = "You start walking up the stairs towards the outside light. " +
+					"You realise it's not break time, and you'll be caught immediately. " +
+					"You slither back down the stairs and reconsider.\n\n" +
+					"Press <b>R</b> to Return to the corridor.";
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_0;
+		}
+		
+	}
+	
+	void StateFloor()
+	{
+		text.text = "Rummagaing around on the dirty floor, you find a hairclip.\n\n" +
+					"Press <b>R</b> to Return to the standing, or <b>H</b> to take the Hairclip.";
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_0;
+		}
+		else if (Input.GetKeyDown(KeyCode.H))
+		{
+			currentState = State.corridor_1;
+		}
+	}
+	
+	void StateClosedDoor()
+	{
+		text.text = "You are looking at a closet door, unfortunately it's locked. " +
+					"Maybe you could find something around to help enourage it open?\n\n" +
+					"Press <b>R</b> to Return to the corridor";	
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_0;
+		}
+	}
+	
+	void StateStairs1()
+	{
+		text.text = "Unfortunately weilding a puny hairclip hasn't given you the " +
+					"confidence to walk out into a courtyard surrounded by armed guards!\n\n" +
+					"Press <b>R</b> to Retreat down the stairs";
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_1;
+		}
+	}
+	
+	void StateCorridor1()
+	{
+		text.text = "Still in the corridor. Floor still dirty. Hairclip in hand. " +
+					"Now what? You wonder if that lock on the closet would succumb to " +
+					"to some lock-picking?\n\n" +
+					"<b>P</b> to Pick the lock, and <b>S</b> to climb the stairs";
+
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			currentState = State.in_closet;
+		}
+		else if (Input.GetKeyDown(KeyCode.S))
+		{
+			currentState = State.stairs_1;
+		}
+	}
+	
+	void StateInCloset()
+	{
+		text.text = "Inside the closet you see a cleaner's uniform that looks about your size! " +
+					"Seems like your day is looking-up.\n\n" +
+					"Press <b>D</b> to Dress up, or <b>R</b> to Return to the corridor";
+
+		if (Input.GetKeyDown(KeyCode.D))
+		{
+			currentState = State.corridor_3;
+		}
+		else if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_2;
+		}
+	}
+	void StateCorridor2()
+	{
+
+	}
+	
+	void StateStairs2()
+	{
+
+	}
+	
+	void StateCorridor3()
+	{
+
+	}
+	
+	void StateCourtyard()
+	{
 		text.text = "You are FREE! \n\n" +
 					"Press <b>P</b> to play again";
 		
@@ -169,5 +323,6 @@ public class TextController : MonoBehaviour {
 			currentState = State.cell;
 		}
 	}
+
 	#endregion
 }
