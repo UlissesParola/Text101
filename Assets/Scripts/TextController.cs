@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextController : MonoBehaviour {
 
 	public Text text;
-	private enum State {cell, sheets_0, lock_0, mirror, sheets_1, lock_1, cell_mirror, freedom};
+	private enum State {cell, sheets_0, lock_0, mirror, sheets_1, lock_1, cell_mirror, corridor_0};
 
 	State currentState;
 	// Use this for initialization
@@ -39,8 +39,8 @@ public class TextController : MonoBehaviour {
 			case State.lock_1:
 				StateLock1();
 				break;
-			case State.freedom:
-				StateFreedom();
+			case State.corridor_0:
+				StateCorridor0();
 				break;
 			default:
 				StateCell();
@@ -48,6 +48,7 @@ public class TextController : MonoBehaviour {
 		}
 	}
 
+	#region States Description
 	void StateCell()
 	{
 		text.text = "You are in a prison cell and you want to escape. " +
@@ -139,7 +140,7 @@ public class TextController : MonoBehaviour {
 		} 
 		else if (Input.GetKeyDown(KeyCode.O))
 		{
-			currentState = State.freedom;
+			currentState = State.corridor_0;
 		}
 	}
 
@@ -158,7 +159,7 @@ public class TextController : MonoBehaviour {
 		}
 	}
 
-	void StateFreedom()
+	void StateCorridor0()
 	{
 		text.text = "You are FREE! \n\n" +
 					"Press <b>P</b> to play again";
@@ -168,4 +169,5 @@ public class TextController : MonoBehaviour {
 			currentState = State.cell;
 		}
 	}
+	#endregion
 }
