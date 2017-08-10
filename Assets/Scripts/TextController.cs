@@ -300,17 +300,46 @@ public class TextController : MonoBehaviour {
 	}
 	void StateCorridor2()
 	{
+		text.text = "Back in the corridor, having declined to dress-up as a cleaner.\n\n" +
+					"Press <b>C</b> to revisit the Closet, and <b>S</b> to climb the stairs";
 
+		if (Input.GetKeyDown(KeyCode.C))
+		{
+			currentState = State.in_closet;
+		}
+		else if (Input.GetKeyDown(KeyCode.S))
+		{
+			currentState = State.stairs_2;
+		}
 	}
 	
 	void StateStairs2()
 	{
+		text.text = "You feel smug for picking the closet door open, and are still armed with " +
+					"a hairclip (now badly bent). Even these achievements together don't give " +
+					"you the courage to climb up the staris to your death!\n\n" +
+					"Press <b>R</b> to Return to the corridor";
 
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			currentState = State.corridor_2;
+		}
 	}
 	
 	void StateCorridor3()
 	{
+		text.text = "You're standing back in the corridor, now convincingly dressed as a cleaner. " +
+					"You strongly consider the run for freedom.\n\n" +
+					"Press <b>S</b> to take the Stairs, or <b>U</b> to Undress";
 
+		if (Input.GetKeyDown(KeyCode.S))
+		{
+			currentState = State.courtyard;
+		}
+		else if (Input.GetKeyDown(KeyCode.U))
+		{
+			currentState = State.in_closet;
+		}
 	}
 	
 	void StateCourtyard()
